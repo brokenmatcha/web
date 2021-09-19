@@ -1,10 +1,10 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Tous Posts - Brokenmatcha</title>
-        <link>https://brokenmatcha.com/posts/</link>
-        <description>Tous Posts | Brokenmatcha</description>
+        <title>shell - Balise - Brokenmatcha</title>
+        <link>https://brokenmatcha.com/tags/shell/</link>
+        <description>shell - Balise - Brokenmatcha</description>
         <generator>Hugo -- gohugo.io</generator><language>fr-FR</language><managingEditor>brokenmatcha@gmail.com (BrokenMatcha)</managingEditor>
-            <webMaster>brokenmatcha@gmail.com (BrokenMatcha)</webMaster><lastBuildDate>Sun, 19 Sep 2021 12:39:42 &#43;0200</lastBuildDate><atom:link href="https://brokenmatcha.com/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>brokenmatcha@gmail.com (BrokenMatcha)</webMaster><lastBuildDate>Sun, 19 Sep 2021 12:39:42 &#43;0200</lastBuildDate><atom:link href="https://brokenmatcha.com/tags/shell/" rel="self" type="application/rss+xml" /><item>
     <title>Afficher et générer un QR Code depuis le terminal !</title>
     <link>https://brokenmatcha.com/qr-code-terminal/</link>
     <pubDate>Sun, 19 Sep 2021 12:39:42 &#43;0200</pubDate><author>
