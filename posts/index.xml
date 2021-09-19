@@ -1,0 +1,18 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>All Posts - Brokenmatcha</title>
+        <link>https://brokenmatcha.com/posts/</link>
+        <description>All Posts | Brokenmatcha</description>
+        <generator>Hugo -- gohugo.io</generator><language>fr-FR</language><managingEditor>brokenmatcha@gmail.com (BrokenMatcha)</managingEditor>
+            <webMaster>brokenmatcha@gmail.com (BrokenMatcha)</webMaster><lastBuildDate>Sun, 19 Sep 2021 12:39:42 &#43;0200</lastBuildDate><atom:link href="https://brokenmatcha.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Afficher et générer un QR Code depuis le terminal !</title>
+    <link>https://brokenmatcha.com/qr-code-terminal/</link>
+    <pubDate>Sun, 19 Sep 2021 12:39:42 &#43;0200</pubDate><author>
+        <name>BrokenMatcha</name>
+    </author><guid>https://brokenmatcha.com/qr-code-terminal/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/terminal-qrcode.png" referrerpolicy="no-referrer">
+            </div>Un QR Code directement dans votre shell sur le terminal !" Un QR Code directement dans votre shell sur le terminal !  -- J&rsquo;ai trouvé ce programme il y a très peu de temps et je le trouve vraiment sympa ! Je voulais donc partager ça avec vous !
+Le programme qrencode permet de générer des QR Code. Ce qui est génial c&rsquo;est qu&rsquo;il permet de les générer dans plusieurs formats.]]></description>
+</item></channel>
+</rss>
