@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title class="pjax-title">Séléction de colonnes avec AWK - Brokenmatcha</title><meta name="Description" content="Dev sportif et passionné qui passe beaucoup trop de temps dans son terminal "><meta property="og:title" content="Séléction de colonnes avec AWK" />
+<meta property="og:description" content="Présentation AWK est un programme très impressionnant qui permet de faire beaucoup de choses et qui complète bien l&rsquo;ensemble d&rsquo;outils disponibles dans un shell Unix.
+C&rsquo;est un outil important à connaitre lorsqu&rsquo;on manipule les lignes de commandes, c&rsquo;est un peu le SQL de la ligne de commandes 😀.
+Utilisation Je l&rsquo;utilise principalement pour sélectionner une colonne et/ou une ligne depuis le terminal.
+En effet, awk est très utile en tant que programme permettant de faire des requêtes de texte." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://brokenmatcha.com/awk-selection-colonne/" />
+<meta property="og:image" content="https://brokenmatcha.com/logo.png"/>
+<meta property="article:published_time" content="2021-09-18T12:39:42+02:00" />
+<meta property="article:modified_time" content="2021-09-18T12:39:42+02:00" /><meta property="og:site_name" content="BrokenMatcha" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://brokenmatcha.com/logo.png"/>
+
+<meta name="twitter:title" content="Séléction de colonnes avec AWK"/>
+<meta name="twitter:description" content="Présentation AWK est un programme très impressionnant qui permet de faire beaucoup de choses et qui complète bien l&rsquo;ensemble d&rsquo;outils disponibles dans un shell Unix.
+C&rsquo;est un outil important à connaitre lorsqu&rsquo;on manipule les lignes de commandes, c&rsquo;est un peu le SQL de la ligne de commandes 😀.
+Utilisation Je l&rsquo;utilise principalement pour sélectionner une colonne et/ou une ligne depuis le terminal.
+En effet, awk est très utile en tant que programme permettant de faire des requêtes de texte."/>
+<meta name="application-name" content="DoIt">
+<meta name="apple-mobile-web-app-title" content="DoIt">
+
+<meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://brokenmatcha.com/awk-selection-colonne/" /><link rel="next" href="https://brokenmatcha.com/qr-code-terminal/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Séléction de colonnes avec AWK",
+        "inLanguage": "fr-FR",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/brokenmatcha.com\/awk-selection-colonne\/"
+        },"genre": "posts","keywords": "shell, tiktok, terminal, linux","wordcount":  452 ,
+        "url": "https:\/\/brokenmatcha.com\/awk-selection-colonne\/","datePublished": "2021-09-18T12:39:42+02:00","dateModified": "2021-09-18T12:39:42+02:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "BrokenMatcha"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme);}
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let themeColorMeta = getMeta('theme-color');
+        if (document.body.getAttribute('theme') != 'light') themeColorMeta.content = '#000000';
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Brokenmatcha">BrokenMatcha.com</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Rechercher des titres, des contenus..." id="search-input-desktop">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="Chercher">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="Clair">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-select" title="Changer de Thème">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Changer de Thème">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Brokenmatcha">BrokenMatcha.com</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Rechercher des titres, des contenus..." id="search-input-mobile">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="Chercher">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="Clair">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
+                        Annuler
+                    </a>
+                </div><a href="#" onclick="return false;" class="menu-item theme-select" title="Changer de Thème">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Changer de Thème">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">Contenu</h2>
+        <div class="toc-content" id="toc-content-auto"></div>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "false")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Séléction de colonnes avec AWK</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://www.brokenmatcha.com" title="Author" target="_blank" rel="noopener noreffer author" class="author">BrokenMatcha</a>
+                </span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="18-09-2021">18-09-2021</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="18-09-2021">18-09-2021</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;452 mots&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        data-src="/awk-selection-colonne/awk-colonne-3.png"
+        data-srcset="/awk-selection-colonne/awk-colonne-3.png, /awk-selection-colonne/awk-colonne-3.png 1.5x, /awk-selection-colonne/awk-colonne-3.png 2x"
+        data-sizes="auto"
+        alt="/awk-selection-colonne/awk-colonne-3.png"
+        title="/awk-selection-colonne/awk-colonne-3.png" height="751" width="916"
+    /></div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contenu</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#présentation">Présentation</a></li>
+    <li><a href="#utilisation">Utilisation</a></li>
+    <li><a href="#exemple">Exemple</a>
+      <ul>
+        <li><a href="#récupérer-lidentifiant-docker-dun-container-en-particulier">Récupérer l&rsquo;identifiant docker d&rsquo;un container en particulier</a></li>
+        <li><a href="#1-récupérer-la-bonne-ligne">1. Récupérer la bonne ligne</a></li>
+        <li><a href="#2-récupérer-la-bonne-colonne">2. Récupérer la bonne colonne</a></li>
+      </ul>
+    </li>
+    <li><a href="#aller-plus-loin">Aller plus loin</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="présentation">Présentation</h2>
+<p><strong>AWK</strong> est un programme très impressionnant qui permet de faire beaucoup de choses et qui complète bien l&rsquo;ensemble d&rsquo;outils disponibles dans un shell Unix.</p>
+<p>C&rsquo;est un outil important à connaitre lorsqu&rsquo;on manipule les lignes de commandes, c&rsquo;est un peu le SQL de la ligne de commandes 😀.</p>
+<h2 id="utilisation">Utilisation</h2>
+<p>Je l&rsquo;utilise principalement pour sélectionner une colonne et/ou une ligne depuis le terminal.</p>
+<p>En effet, <strong>awk</strong> est très utile en tant que programme permettant de faire des requêtes de texte.
+C&rsquo;est un peu comme si c&rsquo;était des requêtes SQL dans une base de données mais au lieu d&rsquo;avoir une base de données on travaille sur du texte.</p>
+<p>Et vu que sur les systèmes Unix, on manipule <em>énormément</em> de texte, ça en fait un outil excellent et très puissant !</p>
+<h2 id="exemple">Exemple</h2>
+<h3 id="récupérer-lidentifiant-docker-dun-container-en-particulier">Récupérer l&rsquo;identifiant docker d&rsquo;un container en particulier</h3>
+<p>Par exemple, la commande <code>docker ps</code> donne une liste de containers qui tournent actuellement sur un host donné.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">CONTAINER ID   IMAGE                                                 COMMAND                  CREATED       STATUS              PORTS                                                                                                                                 NAMES
+629d19dd2f68   docker.elastic.co/elasticsearch/elasticsearch:7.9.3   <span class="s2">&#34;/tini -- /usr/local…&#34;</span>   <span class="m">3</span> days ago    Up <span class="m">8</span> hours          9200/tcp, 9300/tcp                                                                                                                    dev_es_1
+1ec5572d20fe   thecodingmachine/gotenberg:6                          <span class="s2">&#34;/tini -- gotenberg&#34;</span>     <span class="m">3</span> days ago    Up <span class="m">8</span> hours          3000/tcp                                                                                                                              dev_gotenberg-1
+657e688f32df   mysql:5.7   
+</code></pre></td></tr></table>
+</div>
+</div><br>
+<p>Si je souhaite sélectionner l&rsquo;identifiant du container Elasticsearch, je peux utiliser <strong>awk</strong> pour récupérer seulement la colonne correspondant à l&rsquo;identifiant !</p>
+<p>Ce qui se ferait de la manière suivante :</p>
+<h3 id="1-récupérer-la-bonne-ligne">1. Récupérer la bonne ligne</h3>
+<p>Il y a plein de manières de récupérer une ligne mais grep semble en général la solution la plus simple.
+Tout d&rsquo;abord donc, je récupère la ligne correspondante à elasticsearch avec un filtre <code>grep elasticsearch</code>.</p>
+<br>
+<p>Ce qui nous donne plus que la ligne :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">629d19dd2f68   docker.elastic.co/elasticsearch/elasticsearch:7.9.3   <span class="s2">&#34;/tini -- /usr/local…&#34;</span>   <span class="m">3</span> days ago    Up <span class="m">8</span> hours          9200/tcp, 9300/tcp                                                                                                                    dev_es_1
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="2-récupérer-la-bonne-colonne">2. Récupérer la bonne colonne</h3>
+<p>Une fois la ligne récupérée, je peux ensuite utiliser <strong>awk</strong> pour ne garder que la colonne correspondant à l&rsquo;ID du container !</p>
+<br>
+<p>Ce qui donne la commande :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">docker ps <span class="p">|</span> grep elasticsearch <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>On obient <code>629d19dd2f68</code> qui correspond bien à notre identifiant recherché !</p>
+<br>
+<p>On peut ensuite combiner le tout avec <code>xargs</code> pour par exemple stopper le container 😁.</p>
+<h2 id="aller-plus-loin">Aller plus loin</h2>
+<p>Ce qui est génial c&rsquo;est que <strong>awk</strong> fournit plein d&rsquo;outils pour faire les meilleures requêtes possibles.</p>
+<br>
+<p>Par exemple:</p>
+<ul>
+<li>pour récupérer la troisième ligne on peut utiliser <code>awk 'NR==3' {print}'</code></li>
+<li>pour récupérer les lignes 3 à 5 on peut utiliser <code>awk 'NR&gt;=3 &amp;&amp; NR&lt;=5 {print}'</code></li>
+<li>pour récupérer la dernière colonne on utilisera <code>awk '{print $NF}'</code>.</li>
+<li>etc &hellip;</li>
+</ul>
+<p>Un article plus détaillé sur <strong>awk</strong> pourrait peut-être être intéressant 🤔.</p>
+<br>
+<h1 id="vidéo">Vidéo</h1>
+
+
+<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@broken_matcha/video/7005208966020058373" data-video-id="7005208966020058373" style="max-width: 605px;min-width: 325px; margin:auto;" > <section> <a target="_blank" title="@broken_matcha" href="https://www.tiktok.com/@broken_matcha">@broken_matcha</a> <p>Sélectionner une colonne avec awk !  #<a title="education" target="_blank" href="https://www.tiktok.com/tag/education">#education </a>#<a title="linux" target="_blank" href="https://www.tiktok.com/tag/linux">#linux </a>#<a title="learnontiktok" target="_blank" href="https://www.tiktok.com/tag/learnontiktok">#learnontiktok </a>#<a title="tiktokacademie" target="_blank" href="https://www.tiktok.com/tag/tiktokacademie">#tiktokacademie </a>#<a title="informatique" target="_blank" href="https://www.tiktok.com/tag/informatique">#informatique </a>#<a title="programmation" target="_blank" href="https://www.tiktok.com/tag/programmation">#programmation </a>#<a title="developpeur" target="_blank" href="https://www.tiktok.com/tag/developpeur">#developpeur </a>#<a title="shell" target="_blank" href="https://www.tiktok.com/tag/shell">#shell </a>#<a title="geek" target="_blank" href="https://www.tiktok.com/tag/geek">#geek </a>#<a title="code" target="_blank" href="https://www.tiktok.com/tag/code">#code</a></p> <a target="_blank" title="♬ Coffee - LoFi Hip Hop" href="https://www.tiktok.com/music/Coffee-6789323932156561409">♬ Coffee - LoFi Hip Hop</a> </section> </blockquote> <script async src="https://www.tiktok.com/embed.js"></script>
+
+
+
+
+
+
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Mis à jour le 18-09-2021</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/awk-selection-colonne/index.md" target="_blank" rel="noopener noreferrer">Lire Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="#" onclick="return false;" title="Partager sur Twitter" data-sharer="twitter" data-url="https://brokenmatcha.com/awk-selection-colonne/" data-title="Séléction de colonnes avec AWK" data-hashtags="shell,tiktok,terminal,linux"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="Partager sur Facebook" data-sharer="facebook" data-url="https://brokenmatcha.com/awk-selection-colonne/" data-hashtag="shell"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="Partager sur WhatsApp" data-sharer="whatsapp" data-url="https://brokenmatcha.com/awk-selection-colonne/" data-title="Séléction de colonnes avec AWK" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="Partager sur Line" data-sharer="line" data-url="https://brokenmatcha.com/awk-selection-colonne/" data-title="Séléction de colonnes avec AWK"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="#" onclick="return false;" title="Partager sur 微博" data-sharer="weibo" data-url="https://brokenmatcha.com/awk-selection-colonne/" data-title="Séléction de colonnes avec AWK" data-image="awk-colonne-3.png"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="Partager sur Myspace" data-sharer="myspace" data-url="https://brokenmatcha.com/awk-selection-colonne/" data-title="Séléction de colonnes avec AWK" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="#" onclick="return false;" title="Partager sur Blogger" data-sharer="blogger" data-url="https://brokenmatcha.com/awk-selection-colonne/" data-title="Séléction de colonnes avec AWK" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="Partager sur Evernote" data-sharer="evernote" data-url="https://brokenmatcha.com/awk-selection-colonne/" data-title="Séléction de colonnes avec AWK"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/shell/">shell</a>,&nbsp;<a href="/tags/tiktok/">tiktok</a>,&nbsp;<a href="/tags/terminal/">terminal</a>,&nbsp;<a href="/tags/linux/">linux</a></section>
+        <section>
+            <span><a href="#" onclick="window.history.back();">Retour</a></span>&nbsp;|&nbsp;<span><a href="/">Accueil</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+            <a href="/qr-code-terminal/" class="next" rel="next" title="Afficher et générer un QR Code depuis le terminal !">Afficher et générer un QR Code depuis le terminal !<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Propulsé par <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.80.0">Hugo</a> | Thème - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreffer" title="DoIt 0.2.10"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://www.brokenmatcha.com" target="_blank" rel="noopener noreferrer">BrokenMatcha</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Retour en Haut">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="Afficher les Commentaires">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/fuse/fuse.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript" src="/lib/topbar/topbar.min.js"></script><script type="text/javascript" src="/lib/pjax/pjax.min.js"></script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-X36363T6Z4', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-X36363T6Z4" async></script></div>
+
+<div class="pjax-assets"><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copier dans le presse-papiers","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"Se mettre d'accord","link":"Apprendre encore plus","message":"Ce site Web utilise des Cookies pour améliorer votre expérience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"Aucun résultat trouvé","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"sharerjs":true};</script><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></div>
+</body>
+
+</html>

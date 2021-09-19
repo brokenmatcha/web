@@ -12,7 +12,21 @@
     </author><guid>https://brokenmatcha.com/qr-code-terminal/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/terminal-qrcode.png" referrerpolicy="no-referrer">
-            </div>Un QR Code directement dans votre shell sur le terminal !" Un QR Code directement dans votre shell sur le terminal !  -- J&rsquo;ai trouvé ce programme il y a très peu de temps et je le trouve vraiment sympa. Je voulais donc partager ça avec vous !
-Utilisation Le programme qrencode permet de générer des QR Code. Ce qui est génial c&rsquo;est qu&rsquo;il permet de les générer dans plusieurs formats.]]></description>
+            </div>J&rsquo;ai trouvé ce programme il y a très peu de temps et je le trouve vraiment sympa. Je voulais donc partager ça avec vous !
+Utilisation Le programme qrencode permet de générer des QR Code. Ce qui est génial c&rsquo;est qu&rsquo;il permet de les générer dans plusieurs formats.
+Pour générer une image, ça se fait de cette manière :
+1  qrencode -o qrcode.png   Affichage dans le terminal Et là où j&rsquo;ai vraiment trouvé la commande trop cool pour un geek comme moi, c&rsquo;est qu&rsquo;elle permet aussi de générer et d&rsquo;afficher un QR Code directement dans le terminal 😁.]]></description>
+</item><item>
+    <title>Séléction de colonnes avec AWK</title>
+    <link>https://brokenmatcha.com/awk-selection-colonne/</link>
+    <pubDate>Sat, 18 Sep 2021 12:39:42 &#43;0200</pubDate><author>
+        <name>BrokenMatcha</name>
+    </author><guid>https://brokenmatcha.com/awk-selection-colonne/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/awk-colonne-3.png" referrerpolicy="no-referrer">
+            </div>Présentation AWK est un programme très impressionnant qui permet de faire beaucoup de choses et qui complète bien l&rsquo;ensemble d&rsquo;outils disponibles dans un shell Unix.
+C&rsquo;est un outil important à connaitre lorsqu&rsquo;on manipule les lignes de commandes, c&rsquo;est un peu le SQL de la ligne de commandes 😀.
+Utilisation Je l&rsquo;utilise principalement pour sélectionner une colonne et/ou une ligne depuis le terminal.
+En effet, awk est très utile en tant que programme permettant de faire des requêtes de texte.]]></description>
 </item></channel>
 </rss>

@@ -1,10 +1,6 @@
 # Afficher et générer un QR Code depuis le terminal !
 
 
-<!--
- {{< image src="terminal-qrcode.png" caption="Un QR Code directement dans votre shell sur le terminal !" >}}
- -->
-
 J'ai trouvé ce programme il y a très peu de temps et je le trouve vraiment sympa.
 Je voulais donc partager ça avec vous !
 
