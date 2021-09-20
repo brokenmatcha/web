@@ -1,8 +1,6 @@
 # Séléction de colonnes avec AWK
 
 
-## Présentation
-
 **AWK** est un programme très impressionnant qui permet de faire beaucoup de choses et qui complète bien l'ensemble d'outils disponibles dans un shell Unix.
 
 C'est un outil important à connaitre lorsqu'on manipule les lignes de commandes, c'est un peu le SQL de la ligne de commandes 😀.

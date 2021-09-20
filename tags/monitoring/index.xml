@@ -12,7 +12,7 @@
     </author><guid>https://brokenmatcha.com/btop-monitoring/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/main-btop.png" referrerpolicy="no-referrer">
-            </div>Présentation Btop est un outil qui vient tout juste de sortir en version stable (1.0.1 à l&rsquo;heure où j&rsquo;écris cet article).
+            </div>Btop est un outil qui vient tout juste de sortir en version stable (1.0.1 à l&rsquo;heure où j&rsquo;écris cet article).
 C&rsquo;est une évolution du programme bpytop, du même auteur, que j&rsquo;avais déjà présenté en vidéo ( cf plus bas ). L&rsquo;avantage de cette version est qu&rsquo;elle est codée en C++ et est donc beaucoup beaucoup plus fluide et rapide ( ça se sent à l&rsquo;utilisation ).
 Cet outil permet de faire du monitoring à la manière de top ou htop mais de manière plus agréable et surtout avec des indicateurs supplémentaires.]]></description>
 </item></channel>

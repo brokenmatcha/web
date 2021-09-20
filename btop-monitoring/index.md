@@ -1,8 +1,6 @@
 # btop pour monitorer en lignes de commandes !
 
 
-## Présentation
-
 Btop est un outil qui vient tout juste de sortir en version stable (1.0.1 à l'heure où j'écris cet article).
 
 C'est une évolution du programme bpytop, du même auteur, que j'avais déjà présenté en vidéo ( cf plus bas ). 

@@ -12,7 +12,7 @@
     </author><guid>https://brokenmatcha.com/btop-monitoring/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/main-btop.png" referrerpolicy="no-referrer">
-            </div>Présentation Btop est un outil qui vient tout juste de sortir en version stable (1.0.1 à l&rsquo;heure où j&rsquo;écris cet article).
+            </div>Btop est un outil qui vient tout juste de sortir en version stable (1.0.1 à l&rsquo;heure où j&rsquo;écris cet article).
 C&rsquo;est une évolution du programme bpytop, du même auteur, que j&rsquo;avais déjà présenté en vidéo ( cf plus bas ). L&rsquo;avantage de cette version est qu&rsquo;elle est codée en C++ et est donc beaucoup beaucoup plus fluide et rapide ( ça se sent à l&rsquo;utilisation ).
 Cet outil permet de faire du monitoring à la manière de top ou htop mais de manière plus agréable et surtout avec des indicateurs supplémentaires.]]></description>
 </item><item>
@@ -35,7 +35,7 @@ Pour générer une image, ça se fait de cette manière :
     </author><guid>https://brokenmatcha.com/awk-selection-colonne/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/awk-colonne-3.png" referrerpolicy="no-referrer">
-            </div>Présentation AWK est un programme très impressionnant qui permet de faire beaucoup de choses et qui complète bien l&rsquo;ensemble d&rsquo;outils disponibles dans un shell Unix.
+            </div>AWK est un programme très impressionnant qui permet de faire beaucoup de choses et qui complète bien l&rsquo;ensemble d&rsquo;outils disponibles dans un shell Unix.
 C&rsquo;est un outil important à connaitre lorsqu&rsquo;on manipule les lignes de commandes, c&rsquo;est un peu le SQL de la ligne de commandes 😀.
 Utilisation Je l&rsquo;utilise principalement pour sélectionner une colonne et/ou une ligne depuis le terminal.
 En effet, awk est très utile en tant que programme permettant de faire des requêtes de texte.]]></description>
