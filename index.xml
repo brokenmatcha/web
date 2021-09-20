@@ -2,7 +2,7 @@
     <channel>
         <title>Brokenmatcha</title>
         <link>https://brokenmatcha.com/</link>
-        <description>Dev sportif et passionné qui passe beaucoup trop de temps dans son terminal </description>
+        <description>Dev passionné qui passe beaucoup trop de temps dans son terminal ! </description>
         <generator>Hugo -- gohugo.io</generator><language>fr-FR</language><managingEditor>brokenmatcha@gmail.com (BrokenMatcha)</managingEditor>
             <webMaster>brokenmatcha@gmail.com (BrokenMatcha)</webMaster><lastBuildDate>Mon, 20 Sep 2021 12:39:42 &#43;0200</lastBuildDate>
             <atom:link href="https://brokenmatcha.com/index.xml" rel="self" type="application/rss+xml" />
