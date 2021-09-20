@@ -4,7 +4,18 @@
         <link>https://brokenmatcha.com/tags/tiktok/</link>
         <description>tiktok - Balise - Brokenmatcha</description>
         <generator>Hugo -- gohugo.io</generator><language>fr-FR</language><managingEditor>brokenmatcha@gmail.com (BrokenMatcha)</managingEditor>
-            <webMaster>brokenmatcha@gmail.com (BrokenMatcha)</webMaster><lastBuildDate>Sun, 19 Sep 2021 12:39:42 &#43;0200</lastBuildDate><atom:link href="https://brokenmatcha.com/tags/tiktok/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>brokenmatcha@gmail.com (BrokenMatcha)</webMaster><lastBuildDate>Mon, 20 Sep 2021 12:39:42 &#43;0200</lastBuildDate><atom:link href="https://brokenmatcha.com/tags/tiktok/" rel="self" type="application/rss+xml" /><item>
+    <title>btop pour monitorer en lignes de commandes !</title>
+    <link>https://brokenmatcha.com/btop-monitoring/</link>
+    <pubDate>Mon, 20 Sep 2021 12:39:42 &#43;0200</pubDate><author>
+        <name>BrokenMatcha</name>
+    </author><guid>https://brokenmatcha.com/btop-monitoring/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/main-btop.png" referrerpolicy="no-referrer">
+            </div>Présentation Btop est un outil qui vient tout juste de sortir en version stable (1.0.1 à l&rsquo;heure où j&rsquo;écris cet article).
+C&rsquo;est une évolution du programme bpytop, du même auteur, que j&rsquo;avais déjà présenté en vidéo ( cf plus bas ). L&rsquo;avantage de cette version est qu&rsquo;elle est codée en C++ et est donc beaucoup beaucoup plus fluide et rapide ( ça se sent à l&rsquo;utilisation ).
+Cet outil permet de faire du monitoring à la manière de top ou htop mais de manière plus agréable et surtout avec des indicateurs supplémentaires.]]></description>
+</item><item>
     <title>Afficher et générer un QR Code depuis le terminal !</title>
     <link>https://brokenmatcha.com/qr-code-terminal/</link>
     <pubDate>Sun, 19 Sep 2021 12:39:42 &#43;0200</pubDate><author>

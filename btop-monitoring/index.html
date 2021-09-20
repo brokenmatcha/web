@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title class="pjax-title">btop pour monitorer en lignes de commandes ! - Brokenmatcha</title><meta name="Description" content="Dev sportif et passionné qui passe beaucoup trop de temps dans son terminal "><meta property="og:title" content="btop pour monitorer en lignes de commandes !" />
+<meta property="og:description" content="Présentation Btop est un outil qui vient tout juste de sortir en version stable (1.0.1 à l&rsquo;heure où j&rsquo;écris cet article).
+C&rsquo;est une évolution du programme bpytop, du même auteur, que j&rsquo;avais déjà présenté en vidéo ( cf plus bas ). L&rsquo;avantage de cette version est qu&rsquo;elle est codée en C&#43;&#43; et est donc beaucoup beaucoup plus fluide et rapide ( ça se sent à l&rsquo;utilisation ).
+Cet outil permet de faire du monitoring à la manière de top ou htop mais de manière plus agréable et surtout avec des indicateurs supplémentaires." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://brokenmatcha.com/btop-monitoring/" />
+<meta property="og:image" content="https://brokenmatcha.com/logo.png"/>
+<meta property="article:published_time" content="2021-09-20T12:39:42+02:00" />
+<meta property="article:modified_time" content="2021-09-20T12:39:42+02:00" /><meta property="og:site_name" content="BrokenMatcha" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://brokenmatcha.com/logo.png"/>
+
+<meta name="twitter:title" content="btop pour monitorer en lignes de commandes !"/>
+<meta name="twitter:description" content="Présentation Btop est un outil qui vient tout juste de sortir en version stable (1.0.1 à l&rsquo;heure où j&rsquo;écris cet article).
+C&rsquo;est une évolution du programme bpytop, du même auteur, que j&rsquo;avais déjà présenté en vidéo ( cf plus bas ). L&rsquo;avantage de cette version est qu&rsquo;elle est codée en C&#43;&#43; et est donc beaucoup beaucoup plus fluide et rapide ( ça se sent à l&rsquo;utilisation ).
+Cet outil permet de faire du monitoring à la manière de top ou htop mais de manière plus agréable et surtout avec des indicateurs supplémentaires."/>
+<meta name="application-name" content="DoIt">
+<meta name="apple-mobile-web-app-title" content="DoIt">
+
+<meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://brokenmatcha.com/btop-monitoring/" /><link rel="prev" href="https://brokenmatcha.com/qr-code-terminal/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "btop pour monitorer en lignes de commandes !",
+        "inLanguage": "fr-FR",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/brokenmatcha.com\/btop-monitoring\/"
+        },"genre": "posts","keywords": "shell, tiktok, terminal, linux, monitoring","wordcount":  492 ,
+        "url": "https:\/\/brokenmatcha.com\/btop-monitoring\/","datePublished": "2021-09-20T12:39:42+02:00","dateModified": "2021-09-20T12:39:42+02:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "BrokenMatcha"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme);}
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let themeColorMeta = getMeta('theme-color');
+        if (document.body.getAttribute('theme') != 'light') themeColorMeta.content = '#000000';
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Brokenmatcha">BrokenMatcha 🧋</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Rechercher des titres, des contenus..." id="search-input-desktop">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="Chercher">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="Clair">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-select" title="Changer de Thème">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Changer de Thème">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Brokenmatcha">BrokenMatcha 🧋</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Rechercher des titres, des contenus..." id="search-input-mobile">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="Chercher">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="Clair">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
+                        Annuler
+                    </a>
+                </div><a href="#" onclick="return false;" class="menu-item theme-select" title="Changer de Thème">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Changer de Thème">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">Contenu</h2>
+        <div class="toc-content" id="toc-content-auto"></div>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "false")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">btop pour monitorer en lignes de commandes !</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://www.brokenmatcha.com" title="Author" target="_blank" rel="noopener noreffer author" class="author">BrokenMatcha</a>
+                </span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="20-09-2021">20-09-2021</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="20-09-2021">20-09-2021</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;492 mots&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        data-src="/btop-monitoring/main-btop.png"
+        data-srcset="/btop-monitoring/main-btop.png, /btop-monitoring/main-btop.png 1.5x, /btop-monitoring/main-btop.png 2x"
+        data-sizes="auto"
+        alt="/btop-monitoring/main-btop.png"
+        title="/btop-monitoring/main-btop.png" height="729" width="790"
+    /></div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contenu</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#présentation">Présentation</a></li>
+    <li><a href="#installation">Installation</a></li>
+    <li><a href="#différences-par-rapport-à-top-ou-htop">Différences par rapport à top ou htop</a>
+      <ul>
+        <li><a href="#un-visuel-plus-agréable-et-plus-lisible">Un visuel plus agréable et plus lisible</a></li>
+        <li><a href="#des-graphiques-de-lutilisation-de-ressources-dans-le-temps-">Des graphiques de l&rsquo;utilisation de ressources dans le temps !</a></li>
+        <li><a href="#de-nouvelles-informations-ajoutées-notamment-lutilisation-réseau-">De nouvelles informations ajoutées, notamment&hellip; L&rsquo;utilisation réseau !</a></li>
+        <li><a href="#un-menu-comme-dans-un-jeu-vidéo">Un menu comme dans un jeu vidéo</a></li>
+      </ul>
+    </li>
+    <li><a href="#vidéo">Vidéo</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="présentation">Présentation</h2>
+<p>Btop est un outil qui vient tout juste de sortir en version stable (1.0.1 à l&rsquo;heure où j&rsquo;écris cet article).</p>
+<p>C&rsquo;est une évolution du programme bpytop, du même auteur, que j&rsquo;avais déjà présenté en vidéo ( cf plus bas ).
+L&rsquo;avantage de cette version est qu&rsquo;elle est codée en C++ et est donc beaucoup beaucoup plus fluide et rapide ( ça se sent à l&rsquo;utilisation ).</p>
+<p>Cet outil permet de faire du monitoring à la manière de top ou htop mais de manière plus agréable et surtout avec des indicateurs supplémentaires.</p>
+<h2 id="installation">Installation</h2>
+<p>L&rsquo;installation se fait de manière fluide, le plus simple semble d&rsquo;exécuter le script <code>install.sh</code> dans la release disponible sur Github.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">➜  btop ./install.sh 
+ 
+ ██████╗ ████████╗ ██████╗ ██████╗
+ ██╔══██╗╚══██╔══╝██╔═══██╗██╔══██╗   ██╗    ██╗
+ ██████╔╝   ██║   ██║   ██║██████╔╝ ██████╗██████╗
+ ██╔══██╗   ██║   ██║   ██║██╔═══╝  ╚═██╔═╝╚═██╔═╝
+ ██████╔╝   ██║   ╚██████╔╝██║        ╚═╝    ╚═╝
+ ╚═════╝    ╚═╝    ╚═════╝ ╚═╝      Installer
+
+Installing binary to: /usr/local/bin/btop
+Installing doc to: /usr/local/share/btop
+Installing themes to: /usr/local/share/btop/themes
+
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="différences-par-rapport-à-top-ou-htop">Différences par rapport à top ou htop</h2>
+<p>Par rapport à top, on trouvera une liste de processus facilement accessibles et filtrables de manière ergonomique.
+Il suffit de se déplacer avec les flèches du clavier pour sélectionner un processus, on regrettera cependant l&rsquo;absence de navigation VIM qui ne fonctionnait pas lors de mes tests 🥺.</p>
+<p>Ce qui est très appréciable c&rsquo;est que de la même manière que htop, on peut aussi envoyer des signaux au processus séléctionné grâce aux flèches directionnelles !</p>
+<p>Ensuite, viennent les différences majeures par rapport à htop et à top.</p>
+<h3 id="un-visuel-plus-agréable-et-plus-lisible">Un visuel plus agréable et plus lisible</h3>
+<p>Déjà, niveau couleurs, c&rsquo;est super agréable et ergonomique.
+L&rsquo;utilisation des couleurs et de certains caractères spéciaux permettent d&rsquo;avoir un rendu très visuel et lisible: on se croirait presque sorti du terminal.</p>
+<a class="lightgallery" href="/btop-monitoring/main-btop.png" title="le programme btop" data-thumbnail="/btop-monitoring/main-btop.png">
+        <img
+            class="lazyload"
+            data-src="main-btop.png"
+            data-srcset="/btop-monitoring/main-btop.png, main-btop.png 1.5x, /btop-monitoring/main-btop.png 2x"
+            data-sizes="auto"
+            alt="/btop-monitoring/main-btop.png"
+        />
+    </a>
+<h3 id="des-graphiques-de-lutilisation-de-ressources-dans-le-temps-">Des graphiques de l&rsquo;utilisation de ressources dans le temps !</h3>
+<p>Ensuite, côté visuel toujours, la possibilité d&rsquo;avoir un graphique de l&rsquo;utilisation du CPU et de la mémoire dans le temps est un plus indéniable.
+Ceci permettra d&rsquo;identifier des pics d&rsquo;utilisation des ressources monitorées !</p>
+<a class="lightgallery" href="/btop-monitoring/cpu-btop.png" title="Utilisation dans le temps du CPU" data-thumbnail="/btop-monitoring/cpu-btop.png">
+        <img
+            class="lazyload"
+            data-src="cpu-btop.png"
+            data-srcset="/btop-monitoring/cpu-btop.png, cpu-btop.png 1.5x, /btop-monitoring/cpu-btop.png 2x"
+            data-sizes="auto"
+            alt="/btop-monitoring/cpu-btop.png"
+        />
+    </a>
+<h3 id="de-nouvelles-informations-ajoutées-notamment-lutilisation-réseau-">De nouvelles informations ajoutées, notamment&hellip; L&rsquo;utilisation réseau !</h3>
+<p>L&rsquo;ajout d&rsquo;informations comme l&rsquo;espace disque et surtout l&rsquo;utilisation du réseau en font un outil beaucoup plus complet que ses alternatives.</p>
+<p>On peut apercevoir la vitesse moyenne en upload et en download des paquets échangés via l&rsquo;interface réseau.</p>
+<a class="lightgallery" href="/btop-monitoring/reseau-btop.png" title="Networking avec btop" data-thumbnail="/btop-monitoring/reseau-btop.png">
+        <img
+            class="lazyload"
+            data-src="reseau-btop.png"
+            data-srcset="/btop-monitoring/reseau-btop.png, reseau-btop.png 1.5x, /btop-monitoring/reseau-btop.png 2x"
+            data-sizes="auto"
+            alt="/btop-monitoring/reseau-btop.png"
+        />
+    </a>
+<h3 id="un-menu-comme-dans-un-jeu-vidéo">Un menu comme dans un jeu vidéo</h3>
+<p>Enfin, le programme est vraiment bien fini et travaillé; on a même la possibilité de sélectionner un thème de couleurs dans le menu.</p>
+<p>L&rsquo;utilisation des dégradés en font un logiciel agréable à regarder et pourquoi pas à laisser tourner lorsque l&rsquo;on reçoit des invités 😜.</p>
+<a class="lightgallery" href="/btop-monitoring/btop-menu.png" title="Menu btop" data-thumbnail="/btop-monitoring/btop-menu.png">
+        <img
+            class="lazyload"
+            data-src="btop-menu.png"
+            data-srcset="/btop-monitoring/btop-menu.png, btop-menu.png 1.5x, /btop-monitoring/btop-menu.png 2x"
+            data-sizes="auto"
+            alt="/btop-monitoring/btop-menu.png"
+        />
+    </a>
+<p>On appréciera son interface qui est un bel hommage à d&rsquo;anciens jeux de l&rsquo;époque 🤩.</p>
+<h2 id="vidéo">Vidéo</h2>
+<p>Ici, une vidéo dans laquelle je présente bpytop qui est l&rsquo;ancienne version de btop!</p>
+
+
+<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@broken_matcha/video/7007012512721947910" data-video-id="7007012512721947910" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@broken_matcha" href="https://www.tiktok.com/@broken_matcha">@broken_matcha</a> <p>Monitoring avec bpytop! <a title="techtok" target="_blank" href="https://www.tiktok.com/tag/techtok">##techtok</a> <a title="informatique" target="_blank" href="https://www.tiktok.com/tag/informatique">##informatique</a> <a title="geek" target="_blank" href="https://www.tiktok.com/tag/geek">##geek</a> <a title="dev" target="_blank" href="https://www.tiktok.com/tag/dev">##dev</a> <a title="programmation" target="_blank" href="https://www.tiktok.com/tag/programmation">##programmation</a> <a title="code" target="_blank" href="https://www.tiktok.com/tag/code">##code</a> <a title="education" target="_blank" href="https://www.tiktok.com/tag/education">##education</a> <a title="tiktokacademie" target="_blank" href="https://www.tiktok.com/tag/tiktokacademie">##tiktokacademie</a> <a title="linux" target="_blank" href="https://www.tiktok.com/tag/linux">##linux</a>  <a title="macos" target="_blank" href="https://www.tiktok.com/tag/macos">##macos</a> <a title="developpeur" target="_blank" href="https://www.tiktok.com/tag/developpeur">##developpeur</a></p> <a target="_blank" title="♬ lofi and minimalist BGM(325514) - Kazuhi" href="https://www.tiktok.com/music/lofi-and-minimalist-BGM-325514-6830448836784162818">♬ lofi and minimalist BGM(325514) - Kazuhi</a> </section> </blockquote> <script async src="https://www.tiktok.com/embed.js"></script>
+
+
+
+
+
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Mis à jour le 20-09-2021</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/btop-monitoring/index.md" target="_blank" rel="noopener noreferrer">Lire Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="#" onclick="return false;" title="Partager sur Twitter" data-sharer="twitter" data-url="https://brokenmatcha.com/btop-monitoring/" data-title="btop pour monitorer en lignes de commandes !" data-hashtags="shell,tiktok,terminal,linux,monitoring"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="Partager sur Facebook" data-sharer="facebook" data-url="https://brokenmatcha.com/btop-monitoring/" data-hashtag="shell"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="Partager sur WhatsApp" data-sharer="whatsapp" data-url="https://brokenmatcha.com/btop-monitoring/" data-title="btop pour monitorer en lignes de commandes !" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="Partager sur Line" data-sharer="line" data-url="https://brokenmatcha.com/btop-monitoring/" data-title="btop pour monitorer en lignes de commandes !"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="#" onclick="return false;" title="Partager sur 微博" data-sharer="weibo" data-url="https://brokenmatcha.com/btop-monitoring/" data-title="btop pour monitorer en lignes de commandes !" data-image="main-btop.png"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="Partager sur Myspace" data-sharer="myspace" data-url="https://brokenmatcha.com/btop-monitoring/" data-title="btop pour monitorer en lignes de commandes !" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="#" onclick="return false;" title="Partager sur Blogger" data-sharer="blogger" data-url="https://brokenmatcha.com/btop-monitoring/" data-title="btop pour monitorer en lignes de commandes !" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="Partager sur Evernote" data-sharer="evernote" data-url="https://brokenmatcha.com/btop-monitoring/" data-title="btop pour monitorer en lignes de commandes !"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/shell/">shell</a>,&nbsp;<a href="/tags/tiktok/">tiktok</a>,&nbsp;<a href="/tags/terminal/">terminal</a>,&nbsp;<a href="/tags/linux/">linux</a>,&nbsp;<a href="/tags/monitoring/">monitoring</a></section>
+        <section>
+            <span><a href="#" onclick="window.history.back();">Retour</a></span>&nbsp;|&nbsp;<span><a href="/">Accueil</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/qr-code-terminal/" class="prev" rel="prev" title="Afficher et générer un QR Code depuis le terminal !"><i class="fas fa-angle-left fa-fw"></i>Afficher et générer un QR Code depuis le terminal !</a></div>
+</div>
+<div id="comments"></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Propulsé par <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.80.0">Hugo</a> | Thème - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreffer" title="DoIt 0.2.10"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://www.brokenmatcha.com" target="_blank" rel="noopener noreferrer">BrokenMatcha</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Retour en Haut">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="Afficher les Commentaires">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/fuse/fuse.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript" src="/lib/topbar/topbar.min.js"></script><script type="text/javascript" src="/lib/pjax/pjax.min.js"></script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-X36363T6Z4', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-X36363T6Z4" async></script></div>
+
+<div class="pjax-assets"><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copier dans le presse-papiers","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"Se mettre d'accord","link":"Apprendre encore plus","message":"Ce site Web utilise des Cookies pour améliorer votre expérience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"Aucun résultat trouvé","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"sharerjs":true};</script><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></div>
+</body>
+
+</html>
