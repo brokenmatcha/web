@@ -10,7 +10,9 @@
     <pubDate>Tue, 21 Sep 2021 12:39:42 &#43;0200</pubDate><author>
         <name>BrokenMatcha</name>
     </author><guid>https://brokenmatcha.com/docker-backup-host/</guid>
-    <description><![CDATA[Il est possible d&rsquo;exporter les données que l&rsquo;on souhaite depuis Docker, c&rsquo;est une utilisation intéressante notamment pour faire des backups !
+    <description><![CDATA[<div class="featured-image">
+                <img src="/backup-docker-2.png" referrerpolicy="no-referrer">
+            </div>Il est possible d&rsquo;exporter les données que l&rsquo;on souhaite depuis Docker, c&rsquo;est une utilisation intéressante notamment pour faire des backups !
 Ici on ne parle pas de clusters ou de Ceph, juste d&rsquo;un seul serveur qui fait tourner des containers (ou en local sur votre machine).
 C&rsquo;est une solution un peu naive mais qui a le mérite d&rsquo;être facile à mettre en place lorsque l&rsquo;on n&rsquo;a qu&rsquo;un seul serveur à gérer (par exemple pour un petit Homelab ou pour des projets qui n&rsquo;ont pas besoin de scaler horizontalement ni d&rsquo;avoir 99,99% d&rsquo;uptime).]]></description>
 </item><item>
