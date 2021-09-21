@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title class="pjax-title">Export de données (backup) de containers Docker 🐳 - Brokenmatcha</title><meta name="Description" content="Dev passionné qui passe beaucoup trop de temps dans son terminal ! "><meta property="og:title" content="Export de données (backup) de containers Docker 🐳" />
+<meta property="og:description" content="Il est possible d&rsquo;exporter les données que l&rsquo;on souhaite depuis Docker, c&rsquo;est une utilisation intéressante notamment pour faire des backups !
+Ici on ne parle pas de clusters ou de Ceph, juste d&rsquo;un seul serveur qui fait tourner des containers (ou en local sur votre machine).
+C&rsquo;est une solution un peu naive mais qui a le mérite d&rsquo;être facile à mettre en place lorsque l&rsquo;on n&rsquo;a qu&rsquo;un seul serveur à gérer (par exemple pour un petit Homelab ou pour des projets qui n&rsquo;ont pas besoin de scaler horizontalement ni d&rsquo;avoir 99,99% d&rsquo;uptime)." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://brokenmatcha.com/docker-backup-host/" />
+<meta property="og:image" content="https://brokenmatcha.com/logo.png"/>
+<meta property="article:published_time" content="2021-09-21T12:39:42+02:00" />
+<meta property="article:modified_time" content="2021-09-21T12:39:42+02:00" /><meta property="og:site_name" content="BrokenMatcha" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://brokenmatcha.com/logo.png"/>
+
+<meta name="twitter:title" content="Export de données (backup) de containers Docker 🐳"/>
+<meta name="twitter:description" content="Il est possible d&rsquo;exporter les données que l&rsquo;on souhaite depuis Docker, c&rsquo;est une utilisation intéressante notamment pour faire des backups !
+Ici on ne parle pas de clusters ou de Ceph, juste d&rsquo;un seul serveur qui fait tourner des containers (ou en local sur votre machine).
+C&rsquo;est une solution un peu naive mais qui a le mérite d&rsquo;être facile à mettre en place lorsque l&rsquo;on n&rsquo;a qu&rsquo;un seul serveur à gérer (par exemple pour un petit Homelab ou pour des projets qui n&rsquo;ont pas besoin de scaler horizontalement ni d&rsquo;avoir 99,99% d&rsquo;uptime)."/>
+<meta name="application-name" content="DoIt">
+<meta name="apple-mobile-web-app-title" content="DoIt">
+
+<meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://brokenmatcha.com/docker-backup-host/" /><link rel="prev" href="https://brokenmatcha.com/btop-monitoring/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Export de données (backup) de containers Docker 🐳",
+        "inLanguage": "fr-FR",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/brokenmatcha.com\/docker-backup-host\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/brokenmatcha.com\/images\/brmatcha.png",
+                            "width":  1920 ,
+                            "height":  1920 
+                        }],"genre": "posts","keywords": "shell, docker, terminal, linux, backups","wordcount":  614 ,
+        "url": "https:\/\/brokenmatcha.com\/docker-backup-host\/","datePublished": "2021-09-21T12:39:42+02:00","dateModified": "2021-09-21T12:39:42+02:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "BrokenMatcha"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme);}
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let themeColorMeta = getMeta('theme-color');
+        if (document.body.getAttribute('theme') != 'light') themeColorMeta.content = '#000000';
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Brokenmatcha">BrokenMatcha 🧋</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Rechercher des titres, des contenus..." id="search-input-desktop">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="Chercher">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="Clair">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-select" title="Changer de Thème">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Changer de Thème">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Brokenmatcha">BrokenMatcha 🧋</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Rechercher des titres, des contenus..." id="search-input-mobile">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="Chercher">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="Clair">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
+                        Annuler
+                    </a>
+                </div><a href="#" onclick="return false;" class="menu-item theme-select" title="Changer de Thème">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Changer de Thème">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">Contenu</h2>
+        <div class="toc-content" id="toc-content-auto"></div>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "false")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Export de données (backup) de containers Docker 🐳</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://www.brokenmatcha.com" title="Author" target="_blank" rel="noopener noreffer author" class="author">BrokenMatcha</a>
+                </span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="21-09-2021">21-09-2021</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="21-09-2021">21-09-2021</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;614 mots&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contenu</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#backup-de-volumes-docker-">Backup de volumes Docker 🐳</a>
+      <ul>
+        <li><a href="#commande">Commande</a></li>
+        <li><a href="#explications">Explications</a></li>
+      </ul>
+    </li>
+    <li><a href="#backup-de-base-de-données">Backup de base de données</a>
+      <ul>
+        <li><a href="#commande-1">Commande</a></li>
+        <li><a href="#explications-1">Explications</a></li>
+        <li><a href="#conclusion">Conclusion</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>Il est possible d&rsquo;exporter les données que l&rsquo;on souhaite depuis Docker, c&rsquo;est une utilisation intéressante notamment pour faire des backups !</p>
+<p>Ici on ne parle pas de clusters ou de Ceph, juste d&rsquo;un seul serveur qui fait tourner des containers (ou en local sur votre machine).</p>
+<br>
+<p>C&rsquo;est une solution un peu naive mais qui a le mérite d&rsquo;être facile à mettre en place lorsque l&rsquo;on n&rsquo;a qu&rsquo;un seul serveur à gérer (par exemple pour un petit Homelab ou pour des projets qui n&rsquo;ont pas besoin de scaler horizontalement ni d&rsquo;avoir 99,99% d&rsquo;uptime).</p>
+<p>Il existe plusieurs manières de faire et celle que je vais décrire aujourd&rsquo;hui consiste à exécuter une commande directement depuis le serveur qui fait tourner les containers Docker.</p>
+<h2 id="backup-de-volumes-docker-">Backup de volumes Docker 🐳</h2>
+<p>Le backup de volumes depuis la machine host est une tâche intéressante à effectuer car elle nécessite de comprendre comment les volumes docker peuvent être utilisés !</p>
+<h3 id="commande">Commande</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">docker run --rm -v nom_volume_docker:/mon_volume_point_montage:ro -v dossier_backup_host:/backup ubuntu tar cvf /backup/mon_backup_<span class="k">$(</span>date <span class="s2">&#34;+%F-%Hh%M&#34;</span><span class="k">)</span>.tar /mon_volume_point_montage
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="explications">Explications</h3>
+<p>On commence par <code>docker run --rm -v nom_volume_docker:/mon_volume_point_montage:ro </code>
+qui va consister à monter le volume du container que l&rsquo;on souhaite sauvegarder ( en read only histoire de ne pas faire de bêtises 🤪) dans un autre container qui, lui, s&rsquo;occupera d&rsquo;effectuer un backup.</p>
+<br>
+<p>Ensuite, on a <code>-v dossier_backup_host:/backup ubuntu </code>,</p>
+<p>ce qui signifie que notre container de backups ( ici Ubuntu ) montera aussi un dossier de l&rsquo;host ( <em>dossier_backup_host</em> ), cette fois-ci en écriture, pour pouvoir envoyer le résultat du backup à cet endroit.</p>
+<br>
+<p>Le résultat sera donc un dossier de backups dans l&rsquo;host auquel s&rsquo;ajoutera un nouveau fichier de backups généré à partir du volume docker à sauvegarder 😁.</p>
+<p>C&rsquo;est facultatif mais le tout peut être archivé ( ici au format tar), histoire de tout regrouper au même endroit dans une seule archive.</p>
+<h2 id="backup-de-base-de-données">Backup de base de données</h2>
+<p>Ici, je montre un exemple avec MySQL mais le principe est le même avec Postgres.</p>
+<br>
+<p>Pour éviter d&rsquo;avoir à utiliser le mot de passe en clair dans la commande ou de le stocker en clair dans un script, on passe par l&rsquo;utilisation des variables fournies dans le container de la base de données.</p>
+<p>On peut par exemple passer par la variable <code>$MYSQL_PASSWORD</code> dans le cas de MYSQL.</p>
+<h3 id="commande-1">Commande</h3>
+<p>Voici ce que ça donne :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">docker ps <span class="p">|</span> grep nom_container_db <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span> <span class="p">|</span> xargs -I<span class="o">{}</span> docker <span class="nb">exec</span> -i <span class="o">{}</span> bash -c <span class="s1">&#39;mysqldump -u$MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE --skip-comments --no-tablespaces&#39;</span> <span class="p">|</span> gzip &gt; mon_dump_genial_<span class="k">$(</span>date <span class="s2">&#34;+%F-%Hh%M&#34;</span><span class="k">)</span>.psql.gz
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="explications-1">Explications</h3>
+<p>On commence par récupérer l&rsquo;identifiant du container de notre base de données, de la manière suivante : <code> docker ps | grep nom_container_db | awk '{print $1}'</code>.</p>
+<p>Il faudra bien penser à changer <em>nom_container_db</em> par le nom correct du  container.
+Puis, il suffit d&rsquo;utiliser <code>xargs</code> combiné à <code>docker exec</code> pour envoyer notre commande de dump au container.</p>
+<br>
+<p>Cette commande utilise le programme <code>mysqldump</code> qui est fourni dans l&rsquo;image docker officielle de <code>mysql</code>.
+On a juste à placer les bons paramètres en précisant bien les variables d&rsquo;environnement au bon endroit et on pourra récupérer le dump !</p>
+<p>Enfin, on passe tout ça dans gzip histoire d&rsquo;avoir un dump compressé.</p>
+<br>
+<p><em>Note</em> : Dans le cas de l&rsquo;utilisation d&rsquo;un secret docker, il faudra passer par un chemin de type <code>/run/secrets/chemin_secret</code> et faire un <code>cat</code> sur ce chemin pour récupérer le mot de passe.</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>Voilà comment faire des backups de containers simplement !
+Il suffit ensuite de créer un petit script qui contient les deux commandes et de mettre le tout dans une tâche cron ( ou systemd ) pour faire des backups régulièrement 🙂.</p>
+<p>Attention, pour une mise en production dans un cluster il faudra bien sûr utiliser une autre solution plus robuste !</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Mis à jour le 21-09-2021</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/docker-backup-host/index.md" target="_blank" rel="noopener noreferrer">Lire Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="#" onclick="return false;" title="Partager sur Twitter" data-sharer="twitter" data-url="https://brokenmatcha.com/docker-backup-host/" data-title="Export de données (backup) de containers Docker 🐳" data-hashtags="shell,docker,terminal,linux,backups"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="Partager sur Facebook" data-sharer="facebook" data-url="https://brokenmatcha.com/docker-backup-host/" data-hashtag="shell"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="Partager sur WhatsApp" data-sharer="whatsapp" data-url="https://brokenmatcha.com/docker-backup-host/" data-title="Export de données (backup) de containers Docker 🐳" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="Partager sur Line" data-sharer="line" data-url="https://brokenmatcha.com/docker-backup-host/" data-title="Export de données (backup) de containers Docker 🐳"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="#" onclick="return false;" title="Partager sur 微博" data-sharer="weibo" data-url="https://brokenmatcha.com/docker-backup-host/" data-title="Export de données (backup) de containers Docker 🐳"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="Partager sur Myspace" data-sharer="myspace" data-url="https://brokenmatcha.com/docker-backup-host/" data-title="Export de données (backup) de containers Docker 🐳" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="#" onclick="return false;" title="Partager sur Blogger" data-sharer="blogger" data-url="https://brokenmatcha.com/docker-backup-host/" data-title="Export de données (backup) de containers Docker 🐳" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="Partager sur Evernote" data-sharer="evernote" data-url="https://brokenmatcha.com/docker-backup-host/" data-title="Export de données (backup) de containers Docker 🐳"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/shell/">shell</a>,&nbsp;<a href="/tags/docker/">docker</a>,&nbsp;<a href="/tags/terminal/">terminal</a>,&nbsp;<a href="/tags/linux/">linux</a>,&nbsp;<a href="/tags/backups/">backups</a></section>
+        <section>
+            <span><a href="#" onclick="window.history.back();">Retour</a></span>&nbsp;|&nbsp;<span><a href="/">Accueil</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/btop-monitoring/" class="prev" rel="prev" title="btop pour monitorer en lignes de commandes !"><i class="fas fa-angle-left fa-fw"></i>btop pour monitorer en lignes de commandes !</a></div>
+</div>
+<div id="comments"></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Propulsé par <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.80.0">Hugo</a> | Thème - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreffer" title="DoIt 0.2.10"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://www.brokenmatcha.com" target="_blank" rel="noopener noreferrer">BrokenMatcha</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Retour en Haut">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="Afficher les Commentaires">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/fuse/fuse.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript" src="/lib/topbar/topbar.min.js"></script><script type="text/javascript" src="/lib/pjax/pjax.min.js"></script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-X36363T6Z4', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-X36363T6Z4" async></script></div>
+
+<div class="pjax-assets"><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copier dans le presse-papiers","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"Se mettre d'accord","link":"Apprendre encore plus","message":"Ce site Web utilise des Cookies pour améliorer votre expérience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"Aucun résultat trouvé","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"sharerjs":true};</script><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></div>
+</body>
+
+</html>

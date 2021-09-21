@@ -1,0 +1,17 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>backups - Balise - Brokenmatcha</title>
+        <link>https://brokenmatcha.com/tags/backups/</link>
+        <description>backups - Balise - Brokenmatcha</description>
+        <generator>Hugo -- gohugo.io</generator><language>fr-FR</language><managingEditor>brokenmatcha@gmail.com (BrokenMatcha)</managingEditor>
+            <webMaster>brokenmatcha@gmail.com (BrokenMatcha)</webMaster><lastBuildDate>Tue, 21 Sep 2021 12:39:42 &#43;0200</lastBuildDate><atom:link href="https://brokenmatcha.com/tags/backups/" rel="self" type="application/rss+xml" /><item>
+    <title>Export de données (backup) de containers Docker 🐳</title>
+    <link>https://brokenmatcha.com/docker-backup-host/</link>
+    <pubDate>Tue, 21 Sep 2021 12:39:42 &#43;0200</pubDate><author>
+        <name>BrokenMatcha</name>
+    </author><guid>https://brokenmatcha.com/docker-backup-host/</guid>
+    <description><![CDATA[Il est possible d&rsquo;exporter les données que l&rsquo;on souhaite depuis Docker, c&rsquo;est une utilisation intéressante notamment pour faire des backups !
+Ici on ne parle pas de clusters ou de Ceph, juste d&rsquo;un seul serveur qui fait tourner des containers (ou en local sur votre machine).
+C&rsquo;est une solution un peu naive mais qui a le mérite d&rsquo;être facile à mettre en place lorsque l&rsquo;on n&rsquo;a qu&rsquo;un seul serveur à gérer (par exemple pour un petit Homelab ou pour des projets qui n&rsquo;ont pas besoin de scaler horizontalement ni d&rsquo;avoir 99,99% d&rsquo;uptime).]]></description>
+</item></channel>
+</rss>
