@@ -4,7 +4,19 @@
         <link>https://brokenmatcha.com/posts/</link>
         <description>Tous Posts | Brokenmatcha</description>
         <generator>Hugo -- gohugo.io</generator><language>fr-FR</language><managingEditor>brokenmatcha@gmail.com (BrokenMatcha)</managingEditor>
-            <webMaster>brokenmatcha@gmail.com (BrokenMatcha)</webMaster><lastBuildDate>Tue, 21 Sep 2021 12:39:42 &#43;0200</lastBuildDate><atom:link href="https://brokenmatcha.com/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>brokenmatcha@gmail.com (BrokenMatcha)</webMaster><lastBuildDate>Wed, 22 Sep 2021 12:39:42 &#43;0200</lastBuildDate><atom:link href="https://brokenmatcha.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Premier affichage pour mon émulateur de Gameboy !</title>
+    <link>https://brokenmatcha.com/gameboy-emulateur-premier-affichage/</link>
+    <pubDate>Wed, 22 Sep 2021 12:39:42 &#43;0200</pubDate><author>
+        <name>BrokenMatcha</name>
+    </author><guid>https://brokenmatcha.com/gameboy-emulateur-premier-affichage/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/gameboy-logo.png" referrerpolicy="no-referrer">
+            </div>Enfin !!! J&rsquo;ai fini l&rsquo;implémentation du CPU et une partie du GPU !
+L&rsquo;image du logo dans cet article représente l&rsquo;apparition du logo Nintendo émulé par mon émulateur, mon propre code, c&rsquo;est beau 🥲.
+Au passage, je me suis amusé, j&rsquo;ai un peu changé les couleurs, dans le but de faire quelques tests sur le rendu graphique.
+Alors, pour émuler entièrement un jeu, il y a encore beaucoup de travail à faire.]]></description>
+</item><item>
     <title>Export de données (backup) de containers Docker 🐳</title>
     <link>https://brokenmatcha.com/docker-backup-host/</link>
     <pubDate>Tue, 21 Sep 2021 12:39:42 &#43;0200</pubDate><author>

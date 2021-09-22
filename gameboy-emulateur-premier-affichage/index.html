@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title class="pjax-title">Premier affichage pour mon émulateur de Gameboy ! - Brokenmatcha</title><meta name="Description" content="Dev passionné qui passe beaucoup trop de temps dans son terminal ! "><meta property="og:title" content="Premier affichage pour mon émulateur de Gameboy !" />
+<meta property="og:description" content="Enfin !!! J&rsquo;ai fini l&rsquo;implémentation du CPU et une partie du GPU !
+L&rsquo;image du logo dans cet article représente l&rsquo;apparition du logo Nintendo émulé par mon émulateur, mon propre code, c&rsquo;est beau 🥲.
+Au passage, je me suis amusé, j&rsquo;ai un peu changé les couleurs, dans le but de faire quelques tests sur le rendu graphique.
+Alors, pour émuler entièrement un jeu, il y a encore beaucoup de travail à faire." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://brokenmatcha.com/gameboy-emulateur-premier-affichage/" />
+<meta property="og:image" content="https://brokenmatcha.com/logo.png"/>
+<meta property="article:published_time" content="2021-09-22T12:39:42+02:00" />
+<meta property="article:modified_time" content="2021-09-22T12:39:42+02:00" /><meta property="og:site_name" content="BrokenMatcha" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://brokenmatcha.com/logo.png"/>
+
+<meta name="twitter:title" content="Premier affichage pour mon émulateur de Gameboy !"/>
+<meta name="twitter:description" content="Enfin !!! J&rsquo;ai fini l&rsquo;implémentation du CPU et une partie du GPU !
+L&rsquo;image du logo dans cet article représente l&rsquo;apparition du logo Nintendo émulé par mon émulateur, mon propre code, c&rsquo;est beau 🥲.
+Au passage, je me suis amusé, j&rsquo;ai un peu changé les couleurs, dans le but de faire quelques tests sur le rendu graphique.
+Alors, pour émuler entièrement un jeu, il y a encore beaucoup de travail à faire."/>
+<meta name="application-name" content="DoIt">
+<meta name="apple-mobile-web-app-title" content="DoIt">
+
+<meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://brokenmatcha.com/gameboy-emulateur-premier-affichage/" /><link rel="prev" href="https://brokenmatcha.com/docker-backup-host/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Premier affichage pour mon émulateur de Gameboy !",
+        "inLanguage": "fr-FR",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/brokenmatcha.com\/gameboy-emulateur-premier-affichage\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/brokenmatcha.com\/images\/brmatcha.png",
+                            "width":  1920 ,
+                            "height":  1920 
+                        }],"genre": "posts","keywords": "rust, emulation, dev","wordcount":  490 ,
+        "url": "https:\/\/brokenmatcha.com\/gameboy-emulateur-premier-affichage\/","datePublished": "2021-09-22T12:39:42+02:00","dateModified": "2021-09-22T12:39:42+02:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "BrokenMatcha"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme);}
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let themeColorMeta = getMeta('theme-color');
+        if (document.body.getAttribute('theme') != 'light') themeColorMeta.content = '#000000';
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Brokenmatcha">BrokenMatcha 🧋</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Rechercher des titres, des contenus..." id="search-input-desktop">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="Chercher">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="Clair">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-select" title="Changer de Thème">
+                    <i class="fas fa-adjust fa-fw"></i>
+                    <select class="color-theme-select" id="theme-select-desktop" title="Changer de Thème">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="black">Black</option>
+                        <option value="auto">Auto</option>
+                    </select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Brokenmatcha">BrokenMatcha 🧋</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Rechercher des titres, des contenus..." id="search-input-mobile">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="Chercher">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="Clair">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
+                        Annuler
+                    </a>
+                </div><a href="#" onclick="return false;" class="menu-item theme-select" title="Changer de Thème">
+                <i class="fas fa-adjust fa-fw"></i>
+                <select class="color-theme-select" id="theme-select-mobile" title="Changer de Thème">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="black">Black</option>
+                    <option value="auto">Auto</option>
+                </select>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">Contenu</h2>
+        <div class="toc-content" id="toc-content-auto"></div>
+    </div><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "false")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Premier affichage pour mon émulateur de Gameboy !</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://www.brokenmatcha.com" title="Author" target="_blank" rel="noopener noreffer author" class="author">BrokenMatcha</a>
+                </span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="22-09-2021">22-09-2021</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="22-09-2021">22-09-2021</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;490 mots&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        data-src="/gameboy-emulateur-premier-affichage/gameboy-logo.png"
+        data-srcset="/gameboy-emulateur-premier-affichage/gameboy-logo.png, /gameboy-emulateur-premier-affichage/gameboy-logo.png 1.5x, /gameboy-emulateur-premier-affichage/gameboy-logo.png 2x"
+        data-sizes="auto"
+        alt="/gameboy-emulateur-premier-affichage/gameboy-logo.png"
+        title="/gameboy-emulateur-premier-affichage/gameboy-logo.png" height="360" width="686"
+    /></div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>Contenu</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#objectif-accompli">Objectif accompli</a></li>
+    <li><a href="#premier-retour-dexpérience-de-rust-sur-un-side-project">Premier retour d&rsquo;expérience de Rust, sur un side project</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>Enfin !!!
+J&rsquo;ai fini l&rsquo;implémentation du <strong>CPU</strong> et une partie du <strong>GPU</strong> !</p>
+<p>L&rsquo;image du logo dans cet article représente l&rsquo;apparition du logo Nintendo émulé par mon émulateur, mon propre code, c&rsquo;est beau
+🥲.</p>
+<p>Au passage, je me suis amusé, j&rsquo;ai un peu changé les couleurs, dans le but de faire quelques tests sur le rendu graphique.</p>
+<p>Alors, pour émuler entièrement un jeu, il y a encore beaucoup de travail à faire.
+Peut-être un jour&hellip; L&rsquo;émulateur sera capable de supporter des petits jeux comme Tetris, qui sait ? 🤔</p>
+<h2 id="objectif-accompli">Objectif accompli</h2>
+<p>En tous cas j&rsquo;ai rempli l&rsquo;objectif du projet qui était d&rsquo;avoir l&rsquo;affichage du logo fonctionnel, je suis déjà très content d&rsquo;avoir réussi ! Pour le reste, c&rsquo;est que du bonus.</p>
+<p>J&rsquo;ai appris énormément grâce à ce projet et j&rsquo;ai notamment une vision plus claire de comment fonctionne un CPU, la RAM ou encore un bios.
+Notamment la connexion entre chaque composant est super intéressante à concevoir 😊.</p>
+<p>La prochaine étape serait d&rsquo;améliorer l&rsquo;affichage car tout n&rsquo;est pas implémenté, et peut-être afficher un premier écran de jeu !</p>
+<p>Cependant, il y a encore du chemin à faire avant d&rsquo;afficher un écran de jeu.</p>
+<p>Il faudra d&rsquo;abord que j&rsquo;implémente un parser du Header de la cartouche qui contient les informations importantes sur le jeu et sa mémoire.</p>
+<h2 id="premier-retour-dexpérience-de-rust-sur-un-side-project">Premier retour d&rsquo;expérience de Rust, sur un side project</h2>
+<p>Enfin, on termine avec un retour d&rsquo;expérience sur l&rsquo;utilisation de Rust pour ce projet.</p>
+<a class="lightgallery" href="/gameboy-emulateur-premier-affichage/code-emulateur.png" title="Le code de l&#39;émulateur écrit en Rust" data-thumbnail="/gameboy-emulateur-premier-affichage/code-emulateur.png">
+        <img
+            class="lazyload"
+            data-src="code-emulateur.png"
+            data-srcset="/gameboy-emulateur-premier-affichage/code-emulateur.png, code-emulateur.png 1.5x, /gameboy-emulateur-premier-affichage/code-emulateur.png 2x"
+            data-sizes="auto"
+            alt="/gameboy-emulateur-premier-affichage/code-emulateur.png"
+        />
+    </a>
+<p>Pour faire simple: je réfléchis tout simplement à abandonner Rust et partir sur autre chose comme du C/C++ ou en profiter pour essayer le Zig par exemple.
+Étant plus habitué au C/C++, mon expérience de Rust a quand même été très frustrante.
+On passe de langages où le développeur est maitre de ce qu&rsquo;il fait à un langage où, cette fois-ci, c&rsquo;est le langage qui est  maitre. C&rsquo;est une expérience intéressante mais pas toujours facile à vivre.</p>
+<p>Alors, certes Rust apporte des choses intéressantes: une syntaxe un peu plus agréable que le C++ par exemple mais tout aussi puissante, Un gestionnaire de dépendances, une communauté sympa  très dynamique et motivée !
+Le tout, sans compter le caractère <strong>safe</strong> du langage qui est clairement un de ses plus gros intérêts.</p>
+<p>Mais, pour un side project, dans lequel le but premier n&rsquo;est pas d&rsquo;apprendre Rust, je dirais que c&rsquo;est difficile de rester motivé à apprendre un langage qui te met beaucoup de de batons dans les roues ( pour la bonne cause, c&rsquo;est sûr, mais est-ce que mon émulateur a vraiment besoin d&rsquo;être safe ?).</p>
+<p>J&rsquo;ai le sentiment d&rsquo;avoir passé beaucooup plus de temps à me battre avec le langage qu&rsquo;à réellement coder l&rsquo;émulateur.</p>
+<p>En tous cas je suis quand même content d&rsquo;avoir sauté le pas pour essayer Rust🦀 !</p>
+<p>Je ne sais pas quand aura lieu la prochaine update sur ce projet mais en tous cas j&rsquo;ai hâte de savoir si le moi du futur aura persévéré dans l&rsquo;utilisation de Rust 😂.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Mis à jour le 22-09-2021</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/gameboy-emulateur-premier-affichage/index.md" target="_blank" rel="noopener noreferrer">Lire Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="#" onclick="return false;" title="Partager sur Twitter" data-sharer="twitter" data-url="https://brokenmatcha.com/gameboy-emulateur-premier-affichage/" data-title="Premier affichage pour mon émulateur de Gameboy !" data-hashtags="rust,emulation,dev"><i class="fab fa-twitter fa-fw"></i></a><a href="#" onclick="return false;" title="Partager sur Facebook" data-sharer="facebook" data-url="https://brokenmatcha.com/gameboy-emulateur-premier-affichage/" data-hashtag="rust"><i class="fab fa-facebook-square fa-fw"></i></a><a href="#" onclick="return false;" title="Partager sur WhatsApp" data-sharer="whatsapp" data-url="https://brokenmatcha.com/gameboy-emulateur-premier-affichage/" data-title="Premier affichage pour mon émulateur de Gameboy !" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="#" onclick="return false;" title="Partager sur Line" data-sharer="line" data-url="https://brokenmatcha.com/gameboy-emulateur-premier-affichage/" data-title="Premier affichage pour mon émulateur de Gameboy !"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="#" onclick="return false;" title="Partager sur 微博" data-sharer="weibo" data-url="https://brokenmatcha.com/gameboy-emulateur-premier-affichage/" data-title="Premier affichage pour mon émulateur de Gameboy !" data-image="gameboy-logo.png"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="Partager sur Myspace" data-sharer="myspace" data-url="https://brokenmatcha.com/gameboy-emulateur-premier-affichage/" data-title="Premier affichage pour mon émulateur de Gameboy !" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="#" onclick="return false;" title="Partager sur Blogger" data-sharer="blogger" data-url="https://brokenmatcha.com/gameboy-emulateur-premier-affichage/" data-title="Premier affichage pour mon émulateur de Gameboy !" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="#" onclick="return false;" title="Partager sur Evernote" data-sharer="evernote" data-url="https://brokenmatcha.com/gameboy-emulateur-premier-affichage/" data-title="Premier affichage pour mon émulateur de Gameboy !"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/rust/">rust</a>,&nbsp;<a href="/tags/emulation/">emulation</a>,&nbsp;<a href="/tags/dev/">dev</a></section>
+        <section>
+            <span><a href="#" onclick="window.history.back();">Retour</a></span>&nbsp;|&nbsp;<span><a href="/">Accueil</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/docker-backup-host/" class="prev" rel="prev" title="Export de données (backup) de containers Docker 🐳"><i class="fas fa-angle-left fa-fw"></i>Export de données (backup) de containers Docker 🐳</a></div>
+</div>
+<div id="comments"></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Propulsé par <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.80.0">Hugo</a> | Thème - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreffer" title="DoIt 0.2.10"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://www.brokenmatcha.com" target="_blank" rel="noopener noreferrer">BrokenMatcha</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="Retour en Haut">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="Afficher les Commentaires">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/fuse/fuse.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript" src="/lib/topbar/topbar.min.js"></script><script type="text/javascript" src="/lib/pjax/pjax.min.js"></script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-X36363T6Z4', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-X36363T6Z4" async></script></div>
+
+<div class="pjax-assets"><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copier dans le presse-papiers","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"Se mettre d'accord","link":"Apprendre encore plus","message":"Ce site Web utilise des Cookies pour améliorer votre expérience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"Aucun résultat trouvé","snippetLength":30,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"sharerjs":true};</script><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></div>
+</body>
+
+</html>
